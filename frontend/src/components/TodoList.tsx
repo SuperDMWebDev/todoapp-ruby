@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { fetchTask } from '../redux/actions';
 import { AppDispatch } from '../redux/store';
 import {
   deleteTodoAsync,
@@ -11,10 +12,14 @@ import {
 export default function TodoList() {
   const dispatch = useDispatch<AppDispatch>();
   const todos = useSelector((state: any) => state.todos);
-
+  const state = useSelector((state: any) => state);
   useEffect(() => {
-    dispatch(getTodosAsync());
-  }, [dispatch]);
+    console.log('state ', state, todos);
+  }, [state, todos]);
+  useEffect(() => {
+    console.log('call');
+    dispatch(fetchTask());
+  }, []);
   const handleCheckboxClick = (task: Task) => {
     dispatch(toggleCompleteAsync({ id: task.id, completed: !task.completed }));
   };

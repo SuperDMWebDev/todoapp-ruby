@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { nanoid } from 'nanoid';
 import axios from 'axios';
+import { FETCH_TASK_FULFILLED } from './actions';
 export interface Task {
   id?: number;
   title?: string;
@@ -63,7 +64,11 @@ export const deleteTodoAsync = createAsyncThunk(
 export const todoSlice = createSlice({
   name: 'todos',
   initialState: [],
-  reducers: {},
+  reducers: {
+    FETCH_TASK_FULFILLED: (state: any, action: PayloadAction<[]>) => {
+      state.push(...action.payload);
+    },
+  },
   extraReducers: {
     [getTodosAsync.fulfilled.toString()]: (state, action) => {
       return action.payload.todos;
